@@ -46,3 +46,9 @@ Please use asciinema (https://asciinema.org) to record a demo and submit the url
 
 And please elaborate your understanding in layered systems via this homework in your README.md.
 
+
+
+- model：定义数据结构Product、Item([product, amount])、Cart(list of items)
+- db层：维护后台数据
+- biz层：是cli层定义指令的具体实现，介于数据层和用户交互层之间
+- cli层：与用户交互，展示可用指令
