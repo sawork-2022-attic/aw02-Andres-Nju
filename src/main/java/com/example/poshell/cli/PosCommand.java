@@ -34,6 +34,7 @@ public class PosCommand {
 
     @ShellMethod(value = "Add a Product to Cart", key = "a")
     public String addToCart(String productId, int amount) {
+        if (posService.getCart() == null) return "There is no cart!";
         if (posService.add(productId, amount)) {
             return posService.getCart().toString();
         }
