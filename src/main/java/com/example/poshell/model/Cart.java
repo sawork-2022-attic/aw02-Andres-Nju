@@ -14,6 +14,24 @@ public class Cart {
         return items.add(item);
     }
 
+    //TODO:remove item
+    public boolean removeItem(Item item){
+        return items.remove(item);
+    }
+    //TODO:empty the items
+    public void emptyCart(){
+        this.items.clear();
+    }
+    //TODO:get certain item by id from list of items
+    public Item getItemById(String id_){
+        for (Item item : items){
+            if (item.getProduct().getId().equals(id_)){
+                return item;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         if (items.size() ==0){

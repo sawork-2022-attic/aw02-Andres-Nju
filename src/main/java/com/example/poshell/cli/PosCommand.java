@@ -1,6 +1,7 @@
 package com.example.poshell.cli;
 
 import com.example.poshell.biz.PosService;
+import com.example.poshell.model.Cart;
 import com.example.poshell.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -37,5 +38,43 @@ public class PosCommand {
             return posService.getCart().toString();
         }
         return "ERROR";
+    }
+
+    @ShellMethod(value = "Print Current Cart", key = "c")
+    public String PrintCart(){
+        Cart cart = posService.getCart();
+        if (cart == null){
+            return "There is no cart!";
+        }
+        return cart.toString();
+    }
+
+    @ShellMethod(value = "Empty the Cart", key = "e")
+    public String EmptyCart(){
+        Cart cart = posService.getCart();
+        if (cart == null){
+            return "There is no cart!";
+        }
+        cart.emptyCart();
+        return cart.toString();
+    }
+
+    @ShellMethod(value = "Modify Certain Item in the Cart", key = "m")
+    public String ModifyItem(String productId, int amount){
+        Cart cart = posService.getCart();
+        if (cart == null){
+            return "There is no cart!";
+        }
+        if (amount < 0){
+            return "Amount cannot be negative!";
+        }
+        if (cart.removeItem(cart.getItemById(productId))){
+            if (amount == 0) return cart.toString();
+            if (posService.add(productId, amount)) {
+                return cart.toString();
+            }
+            else return "ERROR";
+        }
+        return "No such item in cart!";
     }
 }
